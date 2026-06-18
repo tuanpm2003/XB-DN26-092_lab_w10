@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: latest-test
+  namespace: demo
+spec:
+  # hostNetwork: true
+  containers:
+    - name: nginx
+      image: nginx:1.27.5
+      # image: nginx:latest
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "200m"
+          memory: "256Mi"

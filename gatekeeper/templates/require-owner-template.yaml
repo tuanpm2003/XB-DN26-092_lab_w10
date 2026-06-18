@@ -1,0 +1,24 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata: 
+  name: requireownerlabel
+spec:
+  crd:
+    spec:
+      name:
+        kind: RequireOwnerLabel
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package requireownerlabel
+
+      violation[{"msg": msg}] {
+        not input.review.object.metadata.labels.owner
+        msg := sprintf(
+          "resource %s/%s phải có lable owner",
+          [
+            input.review.object.kind,
+            input.review.object.metadata.name
+          ]
+        )
+      }

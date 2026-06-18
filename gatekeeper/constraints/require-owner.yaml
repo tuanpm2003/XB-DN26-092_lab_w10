@@ -1,0 +1,9 @@
+apiVersion: constrains.gatekeeper.sh/v1beta1
+kind: RequireOwnerLabel
+metadata:
+  name: require-owner-label
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+      kinds: ["Pod"]
