@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rbac
+  namespace: demo
+  spec:
+    project: default
+    source:
+      repoURL: https://github.com/tuanpm2003/XB-DN26-092_lab_w10.git
+      path: rbac
+      targetRevision: main
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: demo
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
