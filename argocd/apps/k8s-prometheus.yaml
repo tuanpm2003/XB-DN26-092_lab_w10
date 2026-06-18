@@ -36,10 +36,10 @@ spec:
             - name: 'null'
             - name: 'email-notifications'
               email_configs:
-              - to: 'vuongbachdoan@gmail.com'
-                from: 'vuongbachdoan@gmail.com'
+              - to: 'minhtuan.phan282@gmail.com'
+                from: 'minhtuan.phan282@gmail.com'
                 smarthost: 'smtp.gmail.com:587'
-                auth_username: 'vuongbachdoan@gmail.com'
+                auth_username: 'minhtuan.phan282@gmail.com'
                 auth_password_file: /etc/alertmanager/secrets/alertmanager-email/password
                 require_tls: true
                 headers:
@@ -116,5 +116,5 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
-    - ServerSideApply=true
+      - CreateNamespace=true
+      - ServerSideApply=true

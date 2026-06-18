@@ -20,40 +20,40 @@ spec:
         app: api
     spec:
       containers:
-      - name: api
-        image: ghcr.io/Vuong-Bach/w10-api:0.0.1
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8080
-          protocol: TCP
-        env:
-        - name: VERSION
-          value: "v0.0.1"
-        - name: ERROR_RATE
-          value: "0"
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 5
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 3
-        resources:
-          limits:
-            cpu: 200m
-            memory: 128Mi
+        - name: api
+          image: w10-api:1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: VERSION
+              value: "v0.0.1"
+            - name: ERROR_RATE
+              value: "0"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+          resources:
+            limits:
+              cpu: 200m
+              memory: 128Mi
   strategy:
     canary:
       analysis:
         templates:
-        - templateName: success-rate
+          - templateName: success-rate
         startingStep: 1
       steps:
-      - setWeight: 10
-      - pause: {duration: 2m}
-      - setWeight: 50
-      - pause: {duration: 2m}
-      - setWeight: 100
+        - setWeight: 10
+        - pause: { duration: 2m }
+        - setWeight: 50
+        - pause: { duration: 2m }
+        - setWeight: 100

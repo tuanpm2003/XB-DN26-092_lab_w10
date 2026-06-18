@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Vuong-Bach/temp.git
+    repoURL: https://github.com/tuanpm2003/XB-DN26-092_lab_w10.git
     path: app-analysis
     targetRevision: main
   destination:
@@ -20,4 +20,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-    - ServerSideApply=true
+      - ServerSideApply=true
