@@ -3,7 +3,7 @@ kind: ConstraintTemplate
 metadata:
   name: k8spspallowedusers
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "-10"
     metadata.gatekeeper.sh/title: "Allowed Users"
     metadata.gatekeeper.sh/version: 1.0.3
     metadata.gatekeeper.sh/bundle: "pod-security-restricted"
