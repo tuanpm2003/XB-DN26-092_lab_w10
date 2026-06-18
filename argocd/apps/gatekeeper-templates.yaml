@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gatekeeper-constraints
+  name: gatekeeper-templates
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-4"
+    argocd.argoproj.io/sync-wave: "-5"
 spec:
   project: default
 
   source:
     repoURL: https://github.com/tuanpm2003/XB-DN26-092_lab_w10.git
     targetRevision: main
-    path: gatekeeper/constraints
+    path: gatekeeper/templates
 
   destination:
     server: https://kubernetes.default.svc
@@ -20,3 +20,14 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+  # Đợi templates được tạo thành công
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
