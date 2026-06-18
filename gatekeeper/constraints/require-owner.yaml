@@ -2,6 +2,8 @@ apiVersion: constrains.gatekeeper.sh/v1beta1
 kind: RequireOwnerLabel
 metadata:
   name: require-owner-label
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   match:
     kinds:
