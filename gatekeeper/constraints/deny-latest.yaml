@@ -1,5 +1,5 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sDisallowedTags
+kind: K8sDisallowLatestTag
 metadata:
   name: disallow-latest
   annotations:
@@ -9,6 +9,3 @@ spec:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
-  parameters:
-    tags:
-      - latest

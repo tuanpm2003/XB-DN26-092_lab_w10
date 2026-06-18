@@ -1,0 +1,21 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sdenyhostnetwork
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+    description: "Cấm sử dụng hostNetwork"
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sDenyHostNetwork
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sdenyhostnetwork
+
+        violation[{"msg": msg}] {
+          input.review.object.spec.hostNetwork == true
+          msg := sprintf("Pod '%s' không được phép sử dụng hostNetwork: true", [input.review.object.metadata.name])
+        }

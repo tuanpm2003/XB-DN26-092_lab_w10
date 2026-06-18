@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bad-pod
+  namespace: demo
+spec:
+  hostNetwork: true  # Vi phạm: deny-hostnetwork
+  securityContext:
+    runAsUser: 0  # Vi phạm: deny-root
+  containers:
+    - name: nginx
+      image: nginx:latest  # Vi phạm: disallow-latest
+      # Thiếu resources.limits - Vi phạm: require-limits
