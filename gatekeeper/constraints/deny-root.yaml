@@ -1,5 +1,5 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sPSPRunAsUser
+kind: K8sPSPAllowedUsers
 metadata:
   name: deny-root-user
   annotations:
@@ -11,4 +11,5 @@ spec:
         kinds: ["Pod"]
 
   parameters:
-    rule: MustRunAsNonRoot
+    runAsUser:
+      rule: MustRunAsNonRoot
