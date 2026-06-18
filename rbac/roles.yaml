@@ -5,11 +5,12 @@ metadata:
   name: pod-developer
 rules:
   - apiGroups: [""]
-    resources: ["pods"]
+    resources: ["deployments", "services", "pods"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
+#================================================================
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleCluster
+kind: ClusterRole
 metadata:
   name: pod-sre
 rules:
@@ -17,12 +18,12 @@ rules:
     resources: ["pods"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
+#================================================================
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  namespace: demo
   name: pod-viewer
 rules:
   - apiGroups: [""]
-    resources: ["pods"]
+    resources: ["*"]
     verbs: ["get", "list", "watch"]
