@@ -4,7 +4,7 @@ metadata:
   namespace: demo
   name: pod-developer
 rules:
-  - apiGroups: [""]
+  - apiGroups: ["", "apps"]
     resources: ["deployments", "services", "pods"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
