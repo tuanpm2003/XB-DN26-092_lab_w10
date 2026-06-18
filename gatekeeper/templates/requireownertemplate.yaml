@@ -7,20 +7,20 @@ metadata:
 spec:
   crd:
     spec:
-      name:
+      names:
         kind: RequireOwnerLabel
   targets:
     - target: admission.k8s.gatekeeper.sh
-    rego: |
-      package requireownerlabel
+      rego: |
+        package requireownerlabel
 
-      violation[{"msg": msg}] {
-        not input.review.object.metadata.labels.owner
-        msg := sprintf(
-          "resource %s/%s phải có lable owner",
-          [
-            input.review.object.kind,
-            input.review.object.metadata.name
-          ]
-        )
-      }
+        violation[{"msg": msg}] {
+          not input.review.object.metadata.labels.owner
+          msg := sprintf(
+            "resource %s/%s phải có label owner",
+            [
+              input.review.object.kind,
+              input.review.object.metadata.name
+            ]
+          )
+        }
