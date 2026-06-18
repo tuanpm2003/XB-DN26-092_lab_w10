@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: latest-test
+  namespace: demo
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
