@@ -6,8 +6,10 @@ resources:
   - templates/k8srequiredlimits.yaml
   - templates/k8spsprootuser.yaml
   - templates/k8spsphostnetwork.yaml
+  - templates/requireownertemplate.yaml
 
   - constraints/deny-latest.yaml
   - constraints/require-limits.yaml
   - constraints/deny-root.yaml
   - constraints/deny-hostnetwork.yaml
+  - constraints/require-owner.yaml
