@@ -18,10 +18,13 @@ spec:
     metadata:
       labels:
         app: api
+        owner: tuanpm2003
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - name: api
-          image: w10-api:1
+          image: ghcr.io/tuanpm2003/w10-api:0.0.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

@@ -26,6 +26,19 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - Replace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m
+  
+  # Chờ webhook pod ready trước khi ArgoCD đánh dấu app là healthy
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      jqPathExpressions:
+        - '.webhooks[].clientConfig.caBundle'
 
   ignoreDifferences:
     - group: apiextensions.k8s.io
