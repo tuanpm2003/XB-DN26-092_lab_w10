@@ -20,6 +20,7 @@ jobs:
     permissions:
       contents: write
       packages: write
+      security-events: write  # Required for uploading SARIF results
 
     steps:
       - name: Checkout repository
@@ -73,7 +74,7 @@ jobs:
           exit-code: 1  # Fail pipeline if vulnerabilities found
 
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
