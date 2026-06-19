@@ -1,0 +1,23 @@
+# ClusterImagePolicy: Verify image signatures before allowing pods
+# Chỉ enforce trên namespace có label: policy.sigstore.dev/include=true
+apiVersion: policy.sigstore.dev/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: require-signed-images
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  # Áp dụng cho images từ GHCR
+  images:
+    - glob: "ghcr.io/tuanpm2003/w10-api:*"
+  
+  # Yêu cầu image phải có chữ ký hợp lệ
+  authorities:
+    - name: cosign-signature
+      key:
+        # Public key để verify signature
+        data: |
+          -----BEGIN PUBLIC KEY-----
+          MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEUEJJhOCQOPt9pgPKcdvWSYwkBHJ7
+          sQLS9tUgv0MyzqairKzom1Y6bGHMEGi8SxxvNfaWBP7IukL7t3XYoDnPCQ==
+          -----END PUBLIC KEY-----

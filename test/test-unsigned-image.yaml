@@ -1,0 +1,22 @@
+# Test: Pod with unsigned image (should be REJECTED by policy controller)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: unsigned-image-test
+  namespace: demo
+  labels:
+    owner: test
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27.5  # Valid from Docker Hub but UNSIGNED
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      resources:
+        limits:
+          cpu: "200m"
+          memory: "256Mi"
+        requests:
+          cpu: "100m"
+          memory: "128Mi"

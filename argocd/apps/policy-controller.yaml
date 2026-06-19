@@ -1,0 +1,73 @@
+# Sigstore Policy Controller: Admission controller để verify image signatures
+# Sync wave -8: Deploy sau Gatekeeper nhưng trước apps
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: policy-controller
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-8"
+spec:
+  project: default
+
+  source:
+    repoURL: https://sigstore.github.io/helm-charts
+    chart: policy-controller
+    targetRevision: 0.10.0
+    helm:
+      skipCrds: false
+      values: |
+        # Webhook configuration
+        webhook:
+          replicas: 1
+          
+          # Chỉ enforce trên namespace có label
+          namespaceSelector:
+            matchExpressions:
+              - key: policy.sigstore.dev/include
+                operator: In
+                values: ["true"]
+          
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+        # Controller configuration  
+        policyController:
+          replicas: 1
+          
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cosign-system
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m
+
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      jqPathExpressions:
+        - '.webhooks[].clientConfig.caBundle'
