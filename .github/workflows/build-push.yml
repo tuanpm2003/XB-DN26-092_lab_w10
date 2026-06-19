@@ -81,5 +81,10 @@ jobs:
 
       - name: Create git tag
         run: |
+          # Delete tag if exists (local and remote)
+          git tag -d v${{ steps.semver.outputs.version }} 2>/dev/null || true
+          git push origin :refs/tags/v${{ steps.semver.outputs.version }} 2>/dev/null || true
+          
+          # Create and push new tag
           git tag v${{ steps.semver.outputs.version }}
           git push origin v${{ steps.semver.outputs.version }}
